@@ -19,7 +19,7 @@ let TAGS: Tag[] = [
 
 mock.onPost("/api/v1/tag").reply((config) => {
     const configTag = JSON.parse(config.data)['tag']
-    const filteredTags = TAGS.filter((tag) => tag.tag == configTag)
+    const filteredTags = TAGS.filter((tag) => tag.tag === configTag)
     if (filteredTags.length !== 0) {
         return [
             200,

@@ -1,8 +1,6 @@
 import {
     Button,
-    Card,
     Form,
-    Input,
     InputNumber,
     Modal,
     Select,
@@ -26,7 +24,7 @@ const Articles = () => {
     const loaderData = useLoaderData() as { articles: Article[]; tags: TTag[] }
     const [articles, setArticles] = useState(loaderData.articles)
 
-    const [tags, setTags] = useState(loaderData.tags)
+    const [tags] = useState(loaderData.tags)
     const [isModalEditTagsOpen, setIsModalEditTagsOpen] = useState(false)
     const [isModalEditTagsConfirmLoading, setIsModalEditTagsConfirmLoading] =
         useState(false)
