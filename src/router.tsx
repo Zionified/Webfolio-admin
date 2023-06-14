@@ -29,6 +29,14 @@ const router = createBrowserRouter([
                 lazy: () => import("./pages/Articles"),
             },
             {
+                path: "article/add",
+                lazy: () => import("./pages/AddArticle"),
+            },
+            {
+                path: "article/edit/:articleId",
+                lazy: () => import("./pages/EditArticle"),
+            },
+            {
                 path: "experiences",
                 lazy: () => import("./pages/Experiences"),
             },
