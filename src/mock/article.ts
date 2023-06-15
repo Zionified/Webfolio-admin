@@ -94,7 +94,6 @@ mock.onPut(new RegExp("/api/v1/article/(.+)")).reply((config) => {
 
     const data = Object.fromEntries(Object.entries(JSON.parse(config.data)).filter(([_, value]) => value !== undefined))
     ARTICLES = ARTICLES.map((article) => article.id.toString() === articleId ? {...filteredArticles[0], ...data} : article)
-    console.log(filteredArticles)
     return [
         200,
         {

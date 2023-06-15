@@ -5,6 +5,7 @@ import {
     TagsOutlined,
     ToolOutlined,
 } from "@ant-design/icons"
+import { css } from "@emotion/css"
 import { Layout, Menu, MenuProps } from "antd"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -58,13 +59,20 @@ const SideBar = () => {
     }, [location])
 
     return (
-        <Layout.Sider>
+        <Layout.Sider
+            className={css`
+                height: 100%;
+            `}
+        >
             <Menu
                 selectedKeys={menuSelectedKeys}
                 mode="inline"
                 theme="dark"
                 items={items}
                 onClick={onMenuItemClick}
+                className={css`
+                    height: 100%;
+                `}
             />
         </Layout.Sider>
     )

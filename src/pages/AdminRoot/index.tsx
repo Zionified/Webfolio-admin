@@ -21,12 +21,18 @@ const Root = () => {
             >
                 <UserControl></UserControl>
             </Header>
-            <Layout>
-                <SideBar />
+            <Layout
+                className={css`
+                    height: calc(100vh-64px);
+                `}
+            >
+                <SideBar/>
                 <Content
                     className={css`
                         background: #fff;
                         padding: 20px 40px;
+                        height: 100%;
+                        overflow-y: scroll;
                     `}
                 >
                     <Outlet></Outlet>

@@ -1,5 +1,4 @@
 import { Article, Tag } from "@/types"
-import { QuestionCircleOutlined } from "@ant-design/icons"
 import {
     Checkbox,
     FloatButton,
@@ -50,7 +49,7 @@ const EditArticle = () => {
             })
             
         }
-    }, [refEditor, setVditor])
+    }, [refEditor, setVditor, article.markdown])
 
     const updateArticle = async (values: any) => {
         try {

@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, Modal, Space, Table } from "antd"
+import { Button, Form, Input, Modal, Space, Table } from "antd"
 import { ColumnsType } from "antd/es/table"
 import type { Tag } from "@/types"
 import PageCard from "@/components/PageCard"
@@ -80,7 +80,6 @@ const Tags = () => {
         } finally {
             setIsModalRenameTagConfirmLoading(false)
         }
-        
     }
 
     const columns: ColumnsType<Tag> = [
