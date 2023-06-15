@@ -86,7 +86,7 @@ const Experiences = () => {
             await api.updateExperience(values.id, {
                 company: values.company,
                 timeline: values.timeline,
-                description: (values.description).split("\n"),
+                description: (values.description).trimStart().split("\n"),
                 visible: values.visible ? true : false,
                 roles: values.roles,
                 tags: values.tags,
@@ -192,7 +192,7 @@ const Experiences = () => {
     const addExperience = async (values: any) => {
         try {
             setIsModalAddExperienceConfirmLoading(true)
-            const descriptionSplit = values.description.split("\n")
+            const descriptionSplit = values.description.trimStart().split("\n")
             const visible = values.visible ? true : false
             await api.addExperience(
                 values.company,
