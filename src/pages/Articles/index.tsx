@@ -106,7 +106,6 @@ const Articles = () => {
 
     const refreshArticles = async () => {
         const articles = await api.listArticles()
-        console.log(articles)
         setArticles(articles)
     }
 

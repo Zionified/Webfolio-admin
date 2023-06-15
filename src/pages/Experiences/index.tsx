@@ -25,7 +25,14 @@ export const loader = async () => {
     }
 }
 
-const colors: string[] = ["magenta", "volcano", "gold", "cyan", "geekblue", "purple"]
+const colors: string[] = [
+    "magenta",
+    "volcano",
+    "gold",
+    "cyan",
+    "geekblue",
+    "purple",
+]
 
 const Experiences = () => {
     const loaderData = useLoaderData() as {
@@ -52,8 +59,6 @@ const Experiences = () => {
     const [experiences, setExperiences] = useState(loaderData.experiences)
     const [tags] = useState(loaderData.tags)
 
-    const [selectedExperience, setSelectedExperience] =
-        useState<Experience | null>(null)
     const showDeleteConfirm = (experience: Experience) => {
         Modal.confirm({
             title: "This action is not reversible.",
@@ -76,7 +81,19 @@ const Experiences = () => {
     }
 
     const showModalEditExperience = (experience: Experience) => {
-        setSelectedExperience(experience)
+        formEditExperience.setFieldValue("id", experience.id)
+        formEditExperience.setFieldValue("sort", experience.sort)
+        formEditExperience.setFieldValue("timeline", experience.timeline)
+        formEditExperience.setFieldValue("roles", experience.roles)
+        formEditExperience.setFieldValue("company", experience.company)
+        formEditExperience.setFieldValue(
+            "description",
+            experience.description.reduce((prev, curr) =>
+                prev.concat("\n", curr)
+            )
+        )
+        formEditExperience.setFieldValue("visible", experience.visible)
+        formEditExperience.setFieldValue("tags", experience.tags)
         setIsModalEditExperienceOpen(true)
     }
 
@@ -86,13 +103,12 @@ const Experiences = () => {
             await api.updateExperience(values.id, {
                 company: values.company,
                 timeline: values.timeline,
-                description: (values.description).trimStart().split("\n"),
+                description: values.description.trimStart().split("\n"),
                 visible: values.visible ? true : false,
                 roles: values.roles,
                 tags: values.tags,
             })
             setIsModalEditExperienceOpen(false)
-            setSelectedExperience(null)
             refreshExperience()
         } catch (err) {
         } finally {
@@ -137,7 +153,8 @@ const Experiences = () => {
             render: (_, { roles }) => (
                 <>
                     {roles.map((role) => {
-                        let color = colors[Math.floor(Math.random() * colors.length)]
+                        let color =
+                            colors[Math.floor(Math.random() * colors.length)]
                         return (
                             <Tag color={color} key={role}>
                                 {role}
@@ -153,7 +170,8 @@ const Experiences = () => {
             render: (_, { tags }) => (
                 <>
                     {tags.map((tag) => {
-                        let color = colors[Math.floor(Math.random() * colors.length)]
+                        let color =
+                            colors[Math.floor(Math.random() * colors.length)]
                         return (
                             <Tag color={color} key={tag}>
                                 {tag.toUpperCase()}
@@ -326,117 +344,104 @@ const Experiences = () => {
                 onOk={() => formEditExperience.submit()}
                 onCancel={() => setIsModalEditExperienceOpen(false)}
                 confirmLoading={isModalEditExperienceConfirmLoading}
+                afterClose={() => formEditExperience.resetFields()}
             >
-                {selectedExperience && (
-                    <Form
-                        name="formEditExperience"
-                        form={formEditExperience}
-                        labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 16 }}
-                        style={{ maxWidth: 600 }}
-                        onFinish={(values) => {
-                            // console.log(values)
-                            updateExperience(values)
-                        }}
-                        initialValues={{
-                            id: selectedExperience.id,
-                            sort: selectedExperience.sort,
-                            company: selectedExperience.company,
-                            timeline: selectedExperience.timeline,
-                            description: selectedExperience.description.reduce(
-                                (prev, curr) => prev.concat("\n", curr)
-                            ),
-                            visible: selectedExperience.visible,
-                            roles: selectedExperience.roles,
-                            tags: selectedExperience.tags,
-                        }}
-                        autoComplete="off"
+                <Form
+                    name="formEditExperience"
+                    form={formEditExperience}
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    style={{ maxWidth: 600 }}
+                    onFinish={(values) => {
+                        // console.log(values)
+                        updateExperience(values)
+                    }}
+                    autoComplete="off"
+                >
+                    <Form.Item label="id" name="id" hidden>
+                        <InputNumber />
+                    </Form.Item>
+                    <Form.Item label="sort" name="sort" hidden>
+                        <InputNumber />
+                    </Form.Item>
+                    <Form.Item
+                        label="Company"
+                        name="company"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input your company name!",
+                            },
+                        ]}
                     >
-                        <Form.Item label="id" name="id" hidden>
-                            <InputNumber />
-                        </Form.Item>
-                        <Form.Item label="sort" name="sort" hidden>
-                            <InputNumber />
-                        </Form.Item>
-                        <Form.Item
-                            label="Company"
-                            name="company"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your company name!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Timeline"
-                            name="timeline"
-                            rules={[
-                                {
-                                    required: true,
-                                    message:
-                                        "Please input your experience timeline!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Description"
-                            name="description"
-                            rules={[
-                                {
-                                    required: true,
-                                    message:
-                                        "Please input your experience description!",
-                                },
-                            ]}
-                        >
-                            <Input.TextArea rows={12} />
-                        </Form.Item>
-                        <Form.Item
-                            label="Visibility"
-                            name="visible"
-                            valuePropName="checked"
-                        >
-                            <Checkbox />
-                        </Form.Item>
-                        <Form.Item
-                            label="Roles"
-                            name="roles"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your role!",
-                                },
-                            ]}
-                        >
-                            <Select mode="tags" style={{ width: "100%" }} />
-                        </Form.Item>
-                        <Form.Item
-                            label="Tags"
-                            name="tags"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your tags!",
-                                },
-                            ]}
-                        >
-                            <Select
-                                mode="multiple"
-                                allowClear
-                                style={{ width: "100%" }}
-                                placeholder="Please select"
-                                options={tags.map((tag) => {
-                                    return { label: tag.tag, value: tag.tag }
-                                })}
-                            />
-                        </Form.Item>
-                    </Form>
-                )}
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Timeline"
+                        name="timeline"
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    "Please input your experience timeline!",
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Description"
+                        name="description"
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    "Please input your experience description!",
+                            },
+                        ]}
+                    >
+                        <Input.TextArea rows={12} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Visibility"
+                        name="visible"
+                        valuePropName="checked"
+                    >
+                        <Checkbox />
+                    </Form.Item>
+                    <Form.Item
+                        label="Roles"
+                        name="roles"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input your role!",
+                            },
+                        ]}
+                    >
+                        <Select mode="tags" style={{ width: "100%" }} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Tags"
+                        name="tags"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input your tags!",
+                            },
+                        ]}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{ width: "100%" }}
+                            placeholder="Please select"
+                            options={tags.map((tag) => {
+                                return { label: tag.tag, value: tag.tag }
+                            })}
+                        />
+                    </Form.Item>
+                </Form>
             </Modal>
         </>
     )

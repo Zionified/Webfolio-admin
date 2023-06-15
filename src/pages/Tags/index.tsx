@@ -59,11 +59,11 @@ const Tags = () => {
     const [isModalRenameTagConfirmLoading, setIsModalRenameTagConfirmLoading] =
         useState(false)
     const [formRenameTag] = Form.useForm()
-    const [selectedTag, setSelectedTag] = useState<Tag | null>(null)
+    // const [selectedTag, setSelectedTag] = useState<Tag | null>(null)
 
     // 传参数记录共同数据
     const showModalRenameTag = (tag: Tag) => {
-        setSelectedTag(tag)
+        // setSelectedTag(tag)
         // 要setFieldValue不然hidden的value是undefined
         formRenameTag.setFieldValue("originalTag", tag.tag)
         setIsModalRenameTagOpen(true)
@@ -74,7 +74,7 @@ const Tags = () => {
             setIsModalRenameTagConfirmLoading(true)
             await api.renameTag(originalTag, newTag)
             setIsModalRenameTagOpen(false)
-            setSelectedTag(null)
+            // setSelectedTag(null)
             refreshTags()
         } catch (err) {
         } finally {
@@ -165,7 +165,7 @@ const Tags = () => {
             </Modal>
             <Modal
                 title="Rename Tag"
-                open={isModalRenameTagOpen && !!selectedTag}
+                open={isModalRenameTagOpen}
                 onOk={() => formRenameTag.submit()}
                 onCancel={() => setIsModalRenameTagOpen(false)}
                 confirmLoading={isModalRenameTagConfirmLoading}
