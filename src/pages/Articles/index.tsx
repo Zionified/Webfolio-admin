@@ -145,7 +145,7 @@ const Articles = () => {
 
     const updateArticleTags = async (articleId: number, tags: string[]) => {
         try {
-            console.log(articleId, tags)
+            // console.log(articleId, tags)
             setIsModalEditTagsConfirmLoading(true)
             await api.updateArticle(articleId, { tags: tags })
             setIsModalEditTagsOpen(false)

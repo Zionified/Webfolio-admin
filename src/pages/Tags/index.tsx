@@ -178,7 +178,7 @@ const Tags = () => {
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
                     onFinish={(values) => {
-                        console.log(values)
+                        // console.log(values)
                         renameTag(values.originalTag, values.newTag)
                     }}
                     autoComplete="off"

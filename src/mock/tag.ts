@@ -71,7 +71,7 @@ mock.onDelete(new RegExp("/api/v1/tag/(.+)")).reply((config) => {
 
 mock.onPut(new RegExp("/api/v1/tag/(.+)")).reply((config) => {
     const renameTag = new RegExp("/api/v1/tag/(.+)").exec(config.url!)![1]
-    console.log(config.url)
+    // console.log(config.url)
     const filteredTags = TAGS.filter((tag) => tag.tag === renameTag)
     if (filteredTags.length === 0) {
         return [

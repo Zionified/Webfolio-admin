@@ -38,7 +38,7 @@ let PROJECT = [
             "Refined keyword extraction model KeyBERT and evaluated its performance on the switchboard dataset using cosine word embedding similarity; achieved 78% average accuracy in extracting conversation topics",
             "Developed visualization pipelines in R for analyzing user satisfaction, interface usability, and feature effectiveness based on the results of the user study on 6 pairs",
         ],
-        image: "https://scontent.fagc2-1.fna.fbcdn.net/v/t39.30808-6/299981593_451795230297859_3289026810608075502_n.png?_nc_cat=105&ccb=1-7&_nc_sid=e3f864&_nc_ohc=Ii73pfZsIvsAX8qLToJ&_nc_ht=scontent.fagc2-1.fna&oh=00_AfAi6ndNRPlK4kmKmMKsTIyBTimP1cFMRFL7ox5Z0xH3TA&oe=64875033",
+        image: "https://lti.cs.cmu.edu/sites/all/themes/lti2015/images/collaborate.png",
         tags: ["Python", "KeyBERT", "R", "Data Visualization"],
         installCount: 100000,
         visible: false,
@@ -98,7 +98,7 @@ mock.onPost("/api/v1/project").reply((config) => {
             ([_, value]) => value !== undefined && value !== null
         )
     ) as typeof newProject
-    console.log(newProject)
+    // console.log(newProject)
     PROJECT.push(newProject)
     return [
         200,

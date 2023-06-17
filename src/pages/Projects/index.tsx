@@ -55,7 +55,7 @@ const Projects = () => {
     ] = useState(false)
     const [formEditProject] = Form.useForm()
 
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+    // const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
     const showDeleteConfirm = (project: Project) => {
         Modal.confirm({
@@ -256,7 +256,7 @@ const Projects = () => {
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
                     onFinish={(values) => {
-                        console.log(values)
+                        // console.log(values)
                         addProject(values)
                     }}
                     autoComplete="off"
@@ -340,7 +340,7 @@ const Projects = () => {
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
                     onFinish={(values) => {
-                        console.log(values)
+                        // console.log(values)
                         updateProject(values)
                     }}
                     // initialValues={{
