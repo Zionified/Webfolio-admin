@@ -1,13 +1,13 @@
 import axios from "axios"
-import { RESPONSE } from "./consts"
+import { RESPONSE, TOKEN_KEY } from "./consts"
 import message from "antd/es/message"
 import history from "./history"
 
 // Add a request interceptor
 axios.interceptors.request.use(
     function (config) {
-        if (localStorage.getItem("__TOKEN")) {
-            config.headers["Token"] = localStorage.getItem("__TOKEN")
+        if (localStorage.getItem(TOKEN_KEY)) {
+            config.headers["Token"] = localStorage.getItem(TOKEN_KEY)
         }
         return config
     },
