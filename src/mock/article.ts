@@ -21,7 +21,7 @@ let ARTICLES: Article[] = [
     },
 ]
 
-mock.onPost("/api/v1/article").reply((config) => {
+mock.onPost("/api/admin/v1/article").reply((config) => {
     const data = JSON.parse(config.data)
     const id = ARTICLES.map((article) => article.id).reduce((prev, curr) => (prev > curr ? prev : curr), 0)
     const addArticle = {
@@ -43,7 +43,7 @@ mock.onPost("/api/v1/article").reply((config) => {
     ]
 })
 
-mock.onGet("/api/v1/articles").reply(() => {
+mock.onGet("/api/admin/v1/articles").reply(() => {
     return [
         200,
         {
@@ -55,8 +55,8 @@ mock.onGet("/api/v1/articles").reply(() => {
     ]
 })
 
-mock.onGet(new RegExp("/api/v1/article/(.+)")).reply((config) => {
-    const articleId = new RegExp("/api/v1/article/(.+)").exec(config.url!)![1]
+mock.onGet(new RegExp("/api/admin/v1/article/(.+)")).reply((config) => {
+    const articleId = new RegExp("/api/admin/v1/article/(.+)").exec(config.url!)![1]
     const filteredArticles = ARTICLES.filter((article) => article.id.toString() === articleId)
     if (filteredArticles.length === 0) {
         return [
@@ -79,8 +79,8 @@ mock.onGet(new RegExp("/api/v1/article/(.+)")).reply((config) => {
     ]
 })
 
-mock.onPut(new RegExp("/api/v1/article/(.+)")).reply((config) => {
-    const articleId = new RegExp("/api/v1/article/(.+)").exec(config.url!)![1]
+mock.onPut(new RegExp("/api/admin/v1/article/(.+)")).reply((config) => {
+    const articleId = new RegExp("/api/admin/v1/article/(.+)").exec(config.url!)![1]
     const filteredArticles = ARTICLES.filter((article) => article.id.toString() === articleId)
     if (filteredArticles.length === 0) {
         return [
@@ -101,8 +101,8 @@ mock.onPut(new RegExp("/api/v1/article/(.+)")).reply((config) => {
         }
     ]
 })
-mock.onDelete(new RegExp("/api/v1/article/(.+)")).reply((config) => {
-    const articleId = new RegExp("/api/v1/article/(.+)").exec(config.url!)![1]
+mock.onDelete(new RegExp("/api/admin/v1/article/(.+)")).reply((config) => {
+    const articleId = new RegExp("/api/admin/v1/article/(.+)").exec(config.url!)![1]
     ARTICLES = ARTICLES.filter((article) => article.id.toString() !== articleId)
     return [
         200,

@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Space, Table } from "antd"
+import { Button, Form, Input, Modal, Space, Table, message } from "antd"
 import { ColumnsType } from "antd/es/table"
 import type { Tag } from "@/types"
 import PageCard from "@/components/PageCard"
@@ -33,6 +33,7 @@ const Tags = () => {
             cancelText: "No",
             onOk: async () => {
                 await api.deleteTag(tag.tag)
+                message.success("Deleted successfully")
                 refreshTags()
             },
         })
@@ -47,6 +48,7 @@ const Tags = () => {
         try {
             setIsModalAddTagConfirmLoading(true)
             await api.addTag(tag)
+            message.success("Added successfully")
             setIsModalAddTagOpen(false)
             refreshTags()
         } catch (err) {
@@ -73,6 +75,7 @@ const Tags = () => {
         try {
             setIsModalRenameTagConfirmLoading(true)
             await api.renameTag(originalTag, newTag)
+            message.success("Renamed successfully")
             setIsModalRenameTagOpen(false)
             // setSelectedTag(null)
             refreshTags()

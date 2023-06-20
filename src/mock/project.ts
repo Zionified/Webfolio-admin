@@ -75,7 +75,7 @@ let PROJECT = [
     },
 ]
 
-mock.onPost("/api/v1/project").reply((config) => {
+mock.onPost("/api/admin/v1/project").reply((config) => {
     const data = JSON.parse(config.data)
     const maxId = PROJECT.map((proj) => proj.id).reduce(
         (prev, curr) => (prev > curr ? prev : curr),
@@ -108,7 +108,7 @@ mock.onPost("/api/v1/project").reply((config) => {
     ]
 })
 
-mock.onGet("/api/v1/projects").reply((config) => {
+mock.onGet("/api/admin/v1/projects").reply((config) => {
     return [
         200,
         {
@@ -120,8 +120,8 @@ mock.onGet("/api/v1/projects").reply((config) => {
     ]
 })
 
-mock.onGet(new RegExp("/api/v1/project/(.+)")).reply((config) => {
-    const projectId = new RegExp("/api/v1/project/(.+)").exec(config.url!)![1]
+mock.onGet(new RegExp("/api/admin/v1/project/(.+)")).reply((config) => {
+    const projectId = new RegExp("/api/admin/v1/project/(.+)").exec(config.url!)![1]
     const filteredProjects = PROJECT.filter(
         (proj) => proj.id.toString() === projectId
     )
@@ -145,8 +145,8 @@ mock.onGet(new RegExp("/api/v1/project/(.+)")).reply((config) => {
     ]
 })
 
-mock.onDelete(new RegExp("/api/v1/project/(.+)")).reply((config) => {
-    const projectId = new RegExp("/api/v1/project/(.+)").exec(config.url!)![1]
+mock.onDelete(new RegExp("/api/admin/v1/project/(.+)")).reply((config) => {
+    const projectId = new RegExp("/api/admin/v1/project/(.+)").exec(config.url!)![1]
     PROJECT = PROJECT.filter((proj) => proj.id.toString() !== projectId)
     return [
         200,
@@ -156,8 +156,8 @@ mock.onDelete(new RegExp("/api/v1/project/(.+)")).reply((config) => {
     ]
 })
 
-mock.onPut(new RegExp("/api/v1/project/(.+)")).reply((config) => {
-    const projectId = new RegExp("/api/v1/project/(.+)").exec(config.url!)![1]
+mock.onPut(new RegExp("/api/admin/v1/project/(.+)")).reply((config) => {
+    const projectId = new RegExp("/api/admin/v1/project/(.+)").exec(config.url!)![1]
     const filteredProjects = PROJECT.filter(
         (proj) => proj.id.toString() === projectId
     )

@@ -17,9 +17,11 @@ const Login = () => {
         username: string
         password: string
     }) => {
-        await login(username, password)
-        message.success("login successful!")
-        navigate("/")
+        try {
+            await login(username, password)
+            message.success("login successful!")
+            navigate("/")
+        } catch (err) {}
     }
 
     return (

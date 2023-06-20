@@ -20,6 +20,7 @@ axios.interceptors.request.use(
 // Add a response interceptor
 axios.interceptors.response.use(
     function (response) {
+        // console.log("response interceptor: ", response)
         if (
             response.status === 200 &&
             response.data &&
@@ -36,7 +37,7 @@ axios.interceptors.response.use(
             ) {
                 history.navigate("/login")
             }
-            Promise.reject(response)
+            return Promise.reject(response)
         }
         return response
     },

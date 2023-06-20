@@ -6,7 +6,9 @@ import { useLoaderData } from "react-router-dom"
 import * as api from "@/requests"
 
 export const loader = async () => {
-    return await api.listAbout()
+    const value = await api.getMapping("ABOUT")
+    // console.log(response)
+    return value ? value : ""
 }
 
 type Props = {
@@ -86,12 +88,14 @@ const About = () => {
     }
 
     const refreshAbout = async () => {
-        setAbout(await api.listAbout())
+        const value = await api.getMapping("ABOUT")
+        setAbout(value ? value : "")
     }
+
     const onSubmit = async () => {
         try {
             setIsModalEditParagraphsConfirmLoading(true)
-            await api.updateAbout(inputAbout)
+            await api.updateMapping("ABOUT", inputAbout)
             refreshAbout()
             setIsModalEditParagraphsOpen(false)
         } catch (err) {

@@ -19,7 +19,7 @@ const USERS = [
     },
 ]
 
-mock.onPost("/api/v1/user/login").reply((config) => {
+mock.onPost("/api/admin/v1/user/login").reply((config) => {
     const data = JSON.parse(config.data)
     const filteredUsers = USERS.filter((user) => {
         return (
@@ -51,7 +51,7 @@ mock.onPost("/api/v1/user/login").reply((config) => {
     ]
 })
 
-mock.onGet("/api/v1/loginUser").reply((config) => {
+mock.onGet("/api/admin/v1/loginUser").reply((config) => {
     const loginUserId = localStorage.getItem("__MOCK_LOGIN_USERID__")
     const filteredUsers = USERS.filter((user) => user.id.toString() === loginUserId)
     if (filteredUsers.length === 0) {
@@ -77,7 +77,7 @@ mock.onGet("/api/v1/loginUser").reply((config) => {
     ]
 })
 
-mock.onPut("/api/v1/loginUser").reply((config) => {
+mock.onPut("/api/admin/v1/loginUser").reply((config) => {
     const loginUserId = localStorage.getItem("__MOCK_LOGIN_USERID__")
     const filteredUsers = USERS.filter((user) => user.id.toString() === loginUserId)
     if (filteredUsers.length === 0) {
@@ -98,7 +98,7 @@ mock.onPut("/api/v1/loginUser").reply((config) => {
     ]
 })
 
-mock.onPatch("/api/v1/loginUser/password").reply((config) => {
+mock.onPatch("/api/admin/v1/loginUser/password").reply((config) => {
     const loginUserId = localStorage.getItem("__MOCK_LOGIN_USERID__")
     const filteredUsers = USERS.filter((user) => user.id.toString() === loginUserId)
     if (filteredUsers.length === 0) {

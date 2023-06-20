@@ -17,7 +17,7 @@ let TAGS: Tag[] = [
     },
 ]
 
-mock.onPost("/api/v1/tag").reply((config) => {
+mock.onPost("/api/admin/v1/tag").reply((config) => {
     const configTag = JSON.parse(config.data)['tag']
     const filteredTags = TAGS.filter((tag) => tag.tag === configTag)
     if (filteredTags.length !== 0) {
@@ -45,7 +45,7 @@ mock.onPost("/api/v1/tag").reply((config) => {
     ]
 })
 
-mock.onGet("/api/v1/tags").reply(() => {
+mock.onGet("/api/admin/v1/tags").reply(() => {
     return [
         200,
         {
@@ -58,8 +58,8 @@ mock.onGet("/api/v1/tags").reply(() => {
     ]
 })
 
-mock.onDelete(new RegExp("/api/v1/tag/(.+)")).reply((config) => {
-    const deleteTag = new RegExp("/api/v1/tag/(.+)").exec(config.url!)![1]
+mock.onDelete(new RegExp("/api/admin/v1/tag/(.+)")).reply((config) => {
+    const deleteTag = new RegExp("/api/admin/v1/tag/(.+)").exec(config.url!)![1]
     TAGS = TAGS.filter((tag) => tag.tag !== deleteTag)
     return [
         200,
@@ -69,8 +69,8 @@ mock.onDelete(new RegExp("/api/v1/tag/(.+)")).reply((config) => {
     ]
 })
 
-mock.onPut(new RegExp("/api/v1/tag/(.+)")).reply((config) => {
-    const renameTag = new RegExp("/api/v1/tag/(.+)").exec(config.url!)![1]
+mock.onPut(new RegExp("/api/admin/v1/tag/(.+)")).reply((config) => {
+    const renameTag = new RegExp("/api/admin/v1/tag/(.+)").exec(config.url!)![1]
     // console.log(config.url)
     const filteredTags = TAGS.filter((tag) => tag.tag === renameTag)
     if (filteredTags.length === 0) {

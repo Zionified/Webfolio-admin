@@ -11,6 +11,7 @@ import {
     Space,
     Table,
     Tag,
+    message,
 } from "antd"
 import { ColumnsType } from "antd/es/table"
 import * as api from "@/requests"
@@ -73,6 +74,7 @@ const Projects = () => {
             cancelText: "No",
             onOk: async () => {
                 await api.deleteProject(project.id)
+                message.success("Deleted successfully")
                 refreshProjects()
             },
         })
@@ -80,14 +82,13 @@ const Projects = () => {
 
     const showModalEditProject = (project: Project) => {
         formEditProject.setFieldValue("id", project.id)
+        formEditProject.setFieldValue("name", project.name)
         formEditProject.setFieldValue("sort", project.sort)
         formEditProject.setFieldValue("title", project.title)
         formEditProject.setFieldValue("image", project.image)
-        formEditProject.setFieldValue(
-            "description",
-            project.description.reduce((prev, curr) => prev.concat("\n", curr))
-        )
+        formEditProject.setFieldValue("description", project.description)
         formEditProject.setFieldValue("visible", project.visible)
+        formEditProject.setFieldValue("github", project.github)
         formEditProject.setFieldValue("starCount", project.starCount)
         formEditProject.setFieldValue("installCount", project.installCount)
         formEditProject.setFieldValue("tags", project.tags)
@@ -97,17 +98,20 @@ const Projects = () => {
     const updateProject = async (values: any) => {
         try {
             setIsModalEditProjectConfirmLoading(true)
-            const descriptionSplit = values.description.trimStart().split("\n")
             const visible = values.visible ? true : false
             await api.updateProject(values.id, {
                 title: values.title,
-                description: descriptionSplit,
+                description: values.description.trimStart(),
+                name: values.name,
                 image: values.image,
                 visible: visible,
                 tags: values.tags,
-                starCount: values.starCount,
-                installCount: values.installCount,
+                github: values.github,
+                starCount: values.starCount ? values.starCount : 0,
+                installCount: values.installCount ? values.installCount : 0,
+                sort: values.sort,
             })
+            message.success("Updated successfully")
             setIsModalEditProjectOpen(false)
             // setSelectedProject(null)
             refreshProjects()
@@ -121,6 +125,10 @@ const Projects = () => {
         {
             title: "ID",
             dataIndex: "id",
+        },
+        {
+            title: "Name",
+            dataIndex: "name",
         },
         {
             title: "Sort",
@@ -181,6 +189,10 @@ const Projects = () => {
                 installCount && <>{installCount}</>,
         },
         {
+            title: "Sort",
+            dataIndex: "sort",
+        },
+        {
             title: "Action",
             key: "action",
             render: (_, record) => (
@@ -210,18 +222,20 @@ const Projects = () => {
         try {
             setIsModalAddProjectConfirmLoading(true)
             const name = values.title.split(/[:\s]+/)[0].toLowerCase()
-            const descriptionSplit = values.description.trimStart().split("\n")
             const visible = values.visible ? true : false
             await api.addProject(
                 values.title,
                 name,
-                descriptionSplit,
+                values.description.trimStart(),
                 values.image,
                 visible,
-                values.tags,
-                values.starCount,
-                values.installCount
+                values.tags ? values.tags : [],
+                values.sort,
+                values.github ? values.github : "",
+                values.starCount ? values.starCount : 0,
+                values.installCount ? values.installCount : 0
             )
+            message.success("Added successfully")
             setIsModalAddProjectOpen(false)
             refreshProjects()
         } catch (err) {
@@ -305,6 +319,9 @@ const Projects = () => {
                     >
                         <Checkbox />
                     </Form.Item>
+                    <Form.Item label="Github" name="github">
+                        <Input />
+                    </Form.Item>
                     <Form.Item label="Star Count" name="starCount">
                         <InputNumber />
                     </Form.Item>
@@ -361,52 +378,29 @@ const Projects = () => {
                     <Form.Item label="id" name="id" hidden>
                         <InputNumber />
                     </Form.Item>
-                    <Form.Item label="sort" name="sort" hidden>
-                        <InputNumber />
+                    <Form.Item label="Name" name="name">
+                        <Input />
                     </Form.Item>
                     <Form.Item
                         label="Project"
                         name="title"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please input your project name!",
-                            },
-                        ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Image Link"
                         name="image"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please input your image link!",
-                            },
-                        ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Description"
                         name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message:
-                                    "Please input your project description!",
-                            },
-                        ]}
                     >
                         <Input.TextArea rows={12} />
                     </Form.Item>
-                    <Form.Item
-                        label="Visibility"
-                        name="visible"
-                        valuePropName="checked"
-                    >
-                        <Checkbox />
+                    <Form.Item label="Github" name="github">
+                        <Input />
                     </Form.Item>
                     <Form.Item label="Star Count" name="starCount">
                         <InputNumber />
@@ -424,6 +418,16 @@ const Projects = () => {
                                 return { label: tag.tag, value: tag.tag }
                             })}
                         />
+                    </Form.Item>
+                    <Form.Item
+                        label="Visibility"
+                        name="visible"
+                        valuePropName="checked"
+                    >
+                        <Checkbox />
+                    </Form.Item>
+                    <Form.Item label="sort" name="sort">
+                        <InputNumber />
                     </Form.Item>
                 </Form>
                 {/* )} */}

@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from "react-router-dom"
+import { Navigate, createBrowserRouter, redirect } from "react-router-dom"
 import Login from "./pages/Login"
 import Root from "./pages/AdminRoot"
 import { fetchLoginUser } from "./requests/user"
@@ -47,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: "tags",
                 lazy: () => import("./pages/Tags"),
+            },
+            {
+                index: true,
+                element: <Navigate to="/about" replace={true} />,
             },
         ],
     },

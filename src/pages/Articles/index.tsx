@@ -42,17 +42,8 @@ const Articles = () => {
             dataIndex: "title",
         },
         {
-            title: "Visibility",
-            key: "visible",
-            render: (_, { visible }) => (
-                <Tag color={!visible ? "red" : "green"}>
-                    {visible ? "TRUE" : "FALSE"}
-                </Tag>
-            ),
-        },
-        {
-            title: "Create Time",
-            dataIndex: "createTime",
+            title: "Abstract",
+            dataIndex: "abstract",
         },
         {
             title: "Tags",
@@ -69,6 +60,19 @@ const Articles = () => {
                     })}
                 </>
             ),
+        },
+        {
+            title: "Visibility",
+            key: "visible",
+            render: (_, { visible }) => (
+                <Tag color={!visible ? "red" : "green"}>
+                    {visible ? "TRUE" : "FALSE"}
+                </Tag>
+            ),
+        },
+        {
+            title: "Create Time",
+            dataIndex: "createTime",
         },
         {
             title: "Action",
