@@ -339,6 +339,9 @@ const Projects = () => {
                             })}
                         />
                     </Form.Item>
+                    <Form.Item label="Sort" name="sort">
+                        <InputNumber />
+                    </Form.Item>
                 </Form>
             </Modal>
             <Modal
