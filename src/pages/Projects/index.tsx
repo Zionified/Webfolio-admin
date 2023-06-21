@@ -146,7 +146,7 @@ const Projects = () => {
         {
             title: "Short Description",
             key: "descriptions",
-            render: (_, { description }) => <>{description[0]}</>,
+            render: (_, { description }) => <>{description.split("\n")[0]}</>,
         },
         {
             title: "Visibility",
@@ -221,11 +221,10 @@ const Projects = () => {
     const addProject = async (values: any) => {
         try {
             setIsModalAddProjectConfirmLoading(true)
-            const name = values.title.split(/[:\s]+/)[0].toLowerCase()
             const visible = values.visible ? true : false
             await api.addProject(
                 values.title,
-                name,
+                values.name,
                 values.description.trimStart(),
                 values.image,
                 visible,
@@ -275,6 +274,18 @@ const Projects = () => {
                     }}
                     autoComplete="off"
                 >
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input your project's name!",
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item
                         label="Project"
                         name="title"
