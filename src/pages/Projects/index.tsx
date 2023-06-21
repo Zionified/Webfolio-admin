@@ -339,7 +339,17 @@ const Projects = () => {
                             })}
                         />
                     </Form.Item>
-                    <Form.Item label="Sort" name="sort">
+                    <Form.Item
+                        label="Sort"
+                        name="sort"
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    "Please input your project sorting number!",
+                            },
+                        ]}
+                    >
                         <InputNumber />
                     </Form.Item>
                 </Form>
@@ -384,22 +394,13 @@ const Projects = () => {
                     <Form.Item label="Name" name="name">
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        label="Project"
-                        name="title"
-                    >
+                    <Form.Item label="Project" name="title">
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        label="Image Link"
-                        name="image"
-                    >
+                    <Form.Item label="Image Link" name="image">
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        label="Description"
-                        name="description"
-                    >
+                    <Form.Item label="Description" name="description">
                         <Input.TextArea rows={12} />
                     </Form.Item>
                     <Form.Item label="Github" name="github">
@@ -429,7 +430,7 @@ const Projects = () => {
                     >
                         <Checkbox />
                     </Form.Item>
-                    <Form.Item label="sort" name="sort">
+                    <Form.Item label="Sort" name="sort">
                         <InputNumber />
                     </Form.Item>
                 </Form>
